@@ -20,17 +20,22 @@ export async function GET (event: APIEvent) {
       keyValuePairs.push({ type: key, value: value })
     }
     const result: string[] = []
+    console.log(keyValuePairs, 'keyValuePairs')
+
     for (const item of keyValuePairs) {
       if (item.type === 'subscribe') {
         const req = await request.get(item.value)
+        console.log(req, 'req1')
+
         result.push(req.data)
       } else {
         const req = await request.get(item.value)
+        console.log(req, 'req2')
         result.push(toBase64(req.data.map(i => i[item.type]).join('\n')))
       }
     }
-    console.log(result);
-    
+    console.log(result)
+
     return new Response(result.join('\n'))
   } catch (error) {
     return new Response('服务端错误')
