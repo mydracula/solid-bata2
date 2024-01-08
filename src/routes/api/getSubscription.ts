@@ -8,6 +8,8 @@ const toBase64 = s => Buffer.from(s).toString('base64')
 
 export async function GET (event: APIEvent) {
   try {
+    console.log(event.request.url, 'event.request.url')
+
     const search = new URL(event.request.url).search
     const regex = /(\w+)=(https?:\/\/[^\s&]+)/g
 
