@@ -8,15 +8,9 @@ const toBase64 = s => Buffer.from(s).toString('base64')
 
 export async function GET (event: APIEvent) {
   try {
-    console.log(event.request.url.search, 'dasdas')
-
-    const search = new URL(event.request.url).search
-
-    console.log(search, 'search')
-
+    const search = decodeURIComponent(new URL(event.request.url).search)
+    console.log(search,'****');
     const regex = /(\w+)=(https?:\/\/[^\s&]+)/g
-
-    // 提取每个键值对的键和值，并存储在数组中
     const keyValuePairs = []
     let match
     while ((match = regex.exec(search)) !== null) {
@@ -25,7 +19,7 @@ export async function GET (event: APIEvent) {
       keyValuePairs.push({ type: key, value: value })
     }
     const result: string[] = []
-
+    console.log(keyValuePairs,'****');
     for (const item of keyValuePairs) {
       if (item.type === 'subscribe') {
         const req = await request.get(item.value)
@@ -36,7 +30,7 @@ export async function GET (event: APIEvent) {
         result.push(toBase64(req.data.map(i => i[item.type]).join('\n')))
       }
     }
-
+    console.log(result,'****');
     return new Response(result.join('\n'))
   } catch (error) {
     return new Response('服务端错误')
