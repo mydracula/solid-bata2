@@ -8,7 +8,7 @@ const toBase64 = s => Buffer.from(s).toString('base64')
 
 export async function GET (event: APIEvent) {
   try {
-    console.log(new URL(event.request.url), 'event')
+    console.log(event.request.url.search, 'dasdas')
 
     const search = new URL(event.request.url).search
 
