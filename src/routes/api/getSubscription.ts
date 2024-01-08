@@ -29,7 +29,8 @@ export async function GET (event: APIEvent) {
         result.push(toBase64(req.data.map(i => i[item.type]).join('\n')))
       }
     }
-
+    console.log(result);
+    
     return new Response(result.join('\n'))
   } catch (error) {
     return new Response('服务端错误')
