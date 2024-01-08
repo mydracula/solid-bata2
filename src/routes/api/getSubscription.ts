@@ -8,9 +8,12 @@ const toBase64 = s => Buffer.from(s).toString('base64')
 
 export async function GET (event: APIEvent) {
   try {
-    console.log(event.request, 'event')
+    console.log(new URL(event.request.url), 'event')
 
     const search = new URL(event.request.url).search
+
+    console.log(search, 'search')
+
     const regex = /(\w+)=(https?:\/\/[^\s&]+)/g
 
     // 提取每个键值对的键和值，并存储在数组中
