@@ -9,6 +9,8 @@ export async function GET (event: APIEvent) {
   try {
     // const regex = /(\w+)=(https?:\/\/[^\s&]+)/g
     const url = decodeURIComponent(event.request.url)
+    console.log(url, '😂')
+
     const regex = /(?:subscribe|config)=.*?(?=(?:&subscribe=|&config=|$))/g
     let matches
     const keyValuePairs = []
@@ -20,6 +22,8 @@ export async function GET (event: APIEvent) {
         value: matches[0].substring(index + 1)
       })
     }
+
+    console.log(keyValuePairs, '😘')
 
     for (const item of keyValuePairs) {
       if (item.key === 'subscribe') {
