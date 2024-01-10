@@ -2,37 +2,39 @@
 
 import { request } from '@/request'
 import { APIEvent } from '@solidjs/start/server/types'
-
 const fromBase64 = s => Buffer.from(s, 'base64').toString()
 const toBase64 = s => Buffer.from(s).toString('base64')
 
 export async function GET (event: APIEvent) {
   try {
-    const search = decodeURIComponent(new URL(event.request.url).search)
-    console.log(search,'****');
-    const regex = /(\w+)=(https?:\/\/[^\s&]+)/g
+    // const regex = /(\w+)=(https?:\/\/[^\s&]+)/g
+    const url = decodeURIComponent(event.request.url)
+    const regex = /(?:subscribe|config)=.*?(?=(?:&subscribe=|&config=|$))/g
+    let matches
     const keyValuePairs = []
-    let match
-    while ((match = regex.exec(search)) !== null) {
-      let key = match[1]
-      let value = match[2]
-      keyValuePairs.push({ type: key, value: value })
+    const result = []
+    while ((matches = regex.exec(url)) !== null) {
+      const index = matches[0].indexOf('=')
+      keyValuePairs.push({
+        key: matches[0].split('=')[0],
+        value: matches[0].substring(index + 1)
+      })
     }
-    const result: string[] = []
-    console.log(keyValuePairs,'****');
-    for (const item of keyValuePairs) {
-      if (item.type === 'subscribe') {
-        const req = await request.get(item.value)
 
+    for (const item of keyValuePairs) {
+      if (item.key === 'subscribe') {
+        const req = await request.get(item.value)
         result.push(req.data)
       } else {
         const req = await request.get(item.value)
-        result.push(toBase64(req.data.map(i => i[item.type]).join('\n')))
+        result.push(toBase64(req.data.map(i => i[item.key]).join('\n')))
       }
     }
-    console.log(result,'****');
+    console.log(result, '****')
     return new Response(result.join('\n'))
   } catch (error) {
+    console.log(error)
+
     return new Response('服务端错误')
   }
 }
