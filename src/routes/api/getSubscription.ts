@@ -9,7 +9,7 @@ export async function GET (event: APIEvent) {
   try {
     // const regex = /(\w+)=(https?:\/\/[^\s&]+)/g
     const url = decodeURIComponent(event.request.url)
-    console.log(url, '😂')
+    console.log(url, '😂', event.request.url)
 
     const regex = /(?:subscribe|config)=.*?(?=(?:&subscribe=|&config=|$))/g
     let matches
