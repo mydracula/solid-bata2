@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { onMount } from "solid-js";
 import { createSignal } from "solid-js";
 import "./app.css";
@@ -42,8 +44,8 @@ export default function App() {
       </div>
 
       <div class="layui-form">
-        <input type="radio" name="AAA" value="0" title="接口1" lay-filter="handleChange" checked />
-        <input type="radio" name="AAA" value="1" title="接口2" lay-filter="handleChange" />
+        <input type="radio" name="AAA" value="0" title="接口1" lay-filter="handleChange" />
+        <input type="radio" name="AAA" value="1" title="接口2" lay-filter="handleChange" checked />
         <input type="radio" name="AAA" value="2" title="接口3" lay-filter="handleChange" />
       </div>
 
