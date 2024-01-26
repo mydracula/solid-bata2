@@ -13,7 +13,7 @@ export async function POST (event: APIEvent) {
   const file = binary.get('file')
   const index = binary.get('index')
   const formData = new FormData()
-  if (index === '0') {
+  if (index === '0' || index === '1') {
     formData.append('file', file)
     formData.append('wechatapp_id', '441150')
   }
@@ -31,7 +31,7 @@ export async function POST (event: APIEvent) {
     if (index == 0) {
       url = res.data.data.filePath
     } else if (index == 1) {
-      url = res.data.data[0].src
+      url = res.data.data[0]['src']
     }
 
     return {

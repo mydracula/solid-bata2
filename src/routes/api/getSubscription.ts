@@ -21,12 +21,10 @@ export async function GET (event: APIEvent) {
       })
     }
 
-    // console.log(keyValuePairs, '😘')
+    console.log(keyValuePairs, '😘')
     for (const item of keyValuePairs) {
       if (item.key === 'subscribe') {
-        const req = request.get(item.value).catch(error => {
-          return new Response('哈哈哈哈')
-        })
+        const req = await request.get(item.value)
         result.push(fromBase64(req.data))
       } else {
         const req = await request.get(item.value)
@@ -38,19 +36,8 @@ export async function GET (event: APIEvent) {
     }
     return new Response(toBase64(result.join('\n')))
   } catch (error) {
-    return new Response('服务端错误')
-  }
-}
+    console.log(error, '么么么么')
 
-async function handleConfigRequest (url, result, key) {
-  try {
-    const req = await request.get(url)
-    Array.prototype.push.apply(
-      result,
-      req.data.map(i => i[key])
-    )
-  } catch (error) {
-    // 抛出异常以便在调用方进行处理
-    throw new Error(`处理配置请求失败: ${url}`)
+    return new Response('服务端错误')
   }
 }
