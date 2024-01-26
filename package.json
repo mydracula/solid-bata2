@@ -7,11 +7,10 @@
     "start": "vinxi start"
   },
   "dependencies": {
-    "@solidjs/start": "^0.4.3",
+    "@solidjs/start": "^0.4.10",
     "axios": "^1.6.5",
-    "query-string": "^8.1.0",
-    "solid-js": "^1.8.8",
-    "vinxi": "0.1.1"
+    "solid-js": "^1.8.12",
+    "vinxi": "0.1.6"
   },
   "engines": {
     "node": ">=18"

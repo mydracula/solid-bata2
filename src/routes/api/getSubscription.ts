@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-import { request } from '@/request'
+import request from '@/request'
 import { APIEvent } from '@solidjs/start/server/types'
 const fromBase64 = s => Buffer.from(s, 'base64').toString()
 const toBase64 = s => Buffer.from(s).toString('base64')
@@ -21,10 +21,12 @@ export async function GET (event: APIEvent) {
       })
     }
 
-    console.log(keyValuePairs, '😘')
+    // console.log(keyValuePairs, '😘')
     for (const item of keyValuePairs) {
       if (item.key === 'subscribe') {
-        const req = await request.get(item.value)
+        const req = request.get(item.value).catch(error => {
+          return new Response('哈哈哈哈')
+        })
         result.push(fromBase64(req.data))
       } else {
         const req = await request.get(item.value)
@@ -34,10 +36,21 @@ export async function GET (event: APIEvent) {
         )
       }
     }
-    return new Response(toBase64(result.join("\n")))
+    return new Response(toBase64(result.join('\n')))
   } catch (error) {
-    console.log(error)
-
     return new Response('服务端错误')
+  }
+}
+
+async function handleConfigRequest (url, result, key) {
+  try {
+    const req = await request.get(url)
+    Array.prototype.push.apply(
+      result,
+      req.data.map(i => i[key])
+    )
+  } catch (error) {
+    // 抛出异常以便在调用方进行处理
+    throw new Error(`处理配置请求失败: ${url}`)
   }
 }
