@@ -5,7 +5,7 @@ import { createSignal } from "solid-js";
 import "./app.css";
 
 export default function App() {
-  const [index, setIndex] = createSignal(0);
+  const [index, setIndex] = createSignal(1);
   const [result, setResult] = createSignal([]);
   onMount(async () => {
     const upload = layui.upload;
