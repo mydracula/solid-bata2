@@ -1,5 +1,6 @@
 import { mount, StartClient } from "@solidjs/start/client";
-import '@/components/layui/css/layui.css'
-import '@/components/layui/layui'
+import 'virtual:uno.css'
+import 'filepond/dist/filepond.min.css';
+
 
 mount(() => <StartClient />, document.getElementById("app"));
