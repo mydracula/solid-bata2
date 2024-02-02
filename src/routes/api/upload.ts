@@ -66,7 +66,7 @@ export async function POST (event: APIEvent) {
           content: content
         },
         headers: {
-          Authorization: ``
+          Authorization: process.env.GITHUB_TOKEN
         }
       })
     } else {
