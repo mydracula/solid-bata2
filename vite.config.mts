@@ -8,7 +8,7 @@ export default defineConfig({
   },
   start: {
     server: {
-      preset: 'node'
+      preset: 'netlify'
     }
   },
   resolve: {
