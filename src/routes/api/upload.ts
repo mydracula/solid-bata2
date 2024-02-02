@@ -101,7 +101,7 @@ export async function POST (event: APIEvent) {
     }
   } catch (error) {
     console.log(error)
-    return new Response('服务器错误', {
+    return new Response(JSON.stringify(error), {
       status: 500
     })
   }
