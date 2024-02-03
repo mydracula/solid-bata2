@@ -8,7 +8,10 @@ export default defineConfig({
   },
   start: {
     server: {
-      preset: 'node'
+      preset: 'cloudflare_module',
+      rollupConfig: {
+        external: ['__STATIC_CONTENT_MANIFEST', 'node:async_hooks']
+      }
     }
   },
   resolve: {
