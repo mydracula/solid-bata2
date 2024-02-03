@@ -89,6 +89,8 @@ export default function App() {
           value={value()}
           onChange={setValue}
           options={option}
+          disallowEmptySelection={true}
+          modal={false}
           placeholder="Select a fruit…"
           itemComponent={props => (
 
