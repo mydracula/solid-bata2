@@ -6,7 +6,7 @@ import request from '@/request'
 const apis = [
   'https://mall.tcl.com/rest/servicecenter/upload',
   'https://f6v54.xs7ja.6176p.bptc.cn/api/h5UploadImage',
-  'https://im.gurl.eu.org/upload',
+  'https://telegra.ph/upload',
   'https://api.github.com/repos'
 ]
 
@@ -76,6 +76,8 @@ export async function POST (event: APIEvent) {
         data: formData
       })
     }
+
+    console.log(process.env.GITHUB_TOKEN, '么么么', res)
 
     const condition = index == 3 ? res.status == 201 : res.status == 200
 
