@@ -28,6 +28,9 @@ button {
   color: inherit;
 }
 
+.filepond--action-edit-item {
+  opacity: 0 !important;
+}
 
 /* h1 {
   color: #335d92;

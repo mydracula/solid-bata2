@@ -77,8 +77,6 @@ export async function POST (event: APIEvent) {
       })
     }
 
-    console.log(process.env.GITHUB_TOKEN, '么么么', res)
-
     const condition = index == 3 ? res.status == 201 : res.status == 200
 
     if (condition) {
@@ -95,15 +93,15 @@ export async function POST (event: APIEvent) {
 
       return {
         URL: url,
-        BBCode: `<img src="${url}" alt="${file.name}" title="${file.name}" />`,
-        HTML: `[img]${url}[/img]`,
+        BBCode: `[img]${url}[/img]`,
+        HTML: `<img src="${url}" alt="${file.name}" title="${file.name}" />`,
         Markdown: `![${file.name}](${url})`,
         'Markdown with link': `[![${file.name}](${url})](${url})`
       }
     }
   } catch (error) {
     console.log(error)
-    return new Response(JSON.stringify(error), {
+    return new Response('服务器错误', {
       status: 500
     })
   }

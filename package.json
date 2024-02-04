@@ -8,9 +8,10 @@
   },
   "dependencies": {
     "@kobalte/core": "^0.12.1",
+    "@pqina/filepond-plugin-image-editor": "^9.0.3",
     "@solidjs/start": "^0.4.10",
     "axios": "^1.6.5",
-    "filepond": "^4.30.6",
+    "filepond-plugin-file-poster": "^2.5.1",
     "solid-js": "^1.8.12",
     "vinxi": "0.1.6"
   },
