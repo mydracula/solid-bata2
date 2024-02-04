@@ -1,1 +1,10 @@
+name = "solidStart"
 compatibility_flags = [ "nodejs_compat" ]
+main = "./.output/server/index.mjs"
+workers_dev = true
+rules = [
+  { type = "ESModule", globs = ["**/*.js", "**/*.mjs"]},
+]
+
+[site]
+bucket = ".output/public"
