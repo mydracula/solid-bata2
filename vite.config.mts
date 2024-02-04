@@ -8,7 +8,7 @@ export default defineConfig({
   },
   start: {
     server: {
-      preset: 'vercel'
+      preset: 'github_pages'
     }
   },
   resolve: {
