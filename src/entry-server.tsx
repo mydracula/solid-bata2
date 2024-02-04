@@ -16,9 +16,9 @@ export default createHandler(() => (
         </head>
         <body>
           <div id="app">{children}</div>
-          {scripts}
           <script src="https://jsdelivr.b-cdn.net/gh/mydracula/image@master/20240205/93273d94959848b49de98f593169704e.js"></script>
           <script src="https://jsdelivr.b-cdn.net/npm/@pqina/pintura/pintura-umd.js"></script>
+          {scripts}
         </body>
       </html>
     )}
