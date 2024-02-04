@@ -8,7 +8,7 @@ export default defineConfig({
   },
   start: {
     server: {
-      baseURL: './solid-bata2',
+      baseURL: './',
       preset: 'github_pages'
     }
   },
