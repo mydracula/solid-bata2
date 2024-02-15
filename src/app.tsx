@@ -1,10 +1,10 @@
 // @ts-nocheck
 import { createSignal, createMemo, onMount } from 'solid-js';
 import { Select, Tabs } from "@kobalte/core";
-import FilePondPluginImageEditor from '@pqina/filepond-plugin-image-editor';
-import FilePondPluginFilePoster from 'filepond-plugin-file-poster';
+// import FilePondPluginImageEditor from '@pqina/filepond-plugin-image-editor';
+// import FilePondPluginFilePoster from 'filepond-plugin-file-poster';
 import "./app.css";
-import 'filepond-plugin-file-poster/dist/filepond-plugin-file-poster.css';
+// import 'filepond-plugin-file-poster/dist/filepond-plugin-file-poster.css';
 
 
 export default function App() {
@@ -27,16 +27,15 @@ export default function App() {
 
   onMount(async () => {
     const { openDefaultEditor, createDefaultImageReader, createDefaultImageWriter, processImage, getEditorDefaults } = window.pintura
-    window.FilePond.registerPlugin(
-      FilePondPluginImageEditor,
-      FilePondPluginFilePoster
-    )
+    // window.FilePond.registerPlugin(
+    //   FilePondPluginImageEditor,
+    //   FilePondPluginFilePoster
+    // )
 
     const pond = window.FilePond.create();
 
     pond.setOptions({
       server: {
-        instantUpload: false,
         process: (fieldName, file, metadata, load, error, progress, abort, transfer, options) => {
           const formData = new FormData();
           formData.append(fieldName, file);
@@ -72,47 +71,47 @@ export default function App() {
       allowDrop: true,
       allowPaste: true,
       allowMultiple: true,
-      allowReorder: true,
-      allowImageEdit: false,
-      filePosterMaxHeight: 46,
-      allowProcess: true,
-      imageEditor: {
-        createEditor: openDefaultEditor,
-        imageReader: [createDefaultImageReader],
-        imageWriter: [
-          createDefaultImageWriter,
-          () =>
-            createDefaultMediaWriter(
-              // Generic Media Writer options, passed to image and video writer
-              [
-                // For handling images
-                createDefaultImageWriter(),
+      // allowReorder: true,
+      // allowImageEdit: false,
+      // filePosterMaxHeight: 46,
+      // allowProcess: true,
+      // imageEditor: {
+      //   createEditor: openDefaultEditor,
+      //   imageReader: [createDefaultImageReader],
+      //   imageWriter: [
+      //     createDefaultImageWriter,
+      //     () =>
+      //       createDefaultMediaWriter(
+      //         // Generic Media Writer options, passed to image and video writer
+      //         [
+      //           // For handling images
+      //           createDefaultImageWriter(),
 
-                // For handling videos
-                createDefaultVideoWriter({
-                  // Video writer instructions here
-                  // ...
+      //           // For handling videos
+      //           createDefaultVideoWriter({
+      //             // Video writer instructions here
+      //             // ...
 
-                  // Encoder to use
-                  encoder: createMediaStreamEncoder({
-                    imageStateToCanvas,
-                  }),
-                }),
-              ]
-            ),
-        ],
+      //             // Encoder to use
+      //             encoder: createMediaStreamEncoder({
+      //               imageStateToCanvas,
+      //             }),
+      //           }),
+      //         ]
+      //       ),
+      //   ],
 
-        imageProcessor: processImage,
-        editorOptions: {
-          ...getEditorDefaults(),
-          // imageCropAspectRatio: null,
-        },
+      //   imageProcessor: processImage,
+      //   editorOptions: {
+      //     ...getEditorDefaults(),
+      //     // imageCropAspectRatio: null,
+      //   },
 
-        /* uncomment if you've used FilePond with version 6 of Pintura and are loading old file metadata
-        // map legacy data objects to new imageState objects
-        legacyDataToImageState: legacyDataToImageState,
-        */
-      },
+      //   /* uncomment if you've used FilePond with version 6 of Pintura and are loading old file metadata
+      //   // map legacy data objects to new imageState objects
+      //   legacyDataToImageState: legacyDataToImageState,
+      //   */
+      // },
 
       // stylePanelAspectRatio: 0.1
       // labelIdle: 'Drag & Drop your files or <span class="font-medium">Browse</span>',
