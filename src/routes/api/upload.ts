@@ -77,8 +77,6 @@ export async function POST (event: APIEvent) {
       })
     }
 
-    console.log(process.env.GITHUB_TOKEN, '么么么', res)
-
     const condition = index == 3 ? res.status == 201 : res.status == 200
 
     if (condition) {
@@ -88,22 +86,22 @@ export async function POST (event: APIEvent) {
       } else if (index == 1) {
         url = res.data.data[0]['src']
       } else if (index == 2) {
-        url = 'https://i0.wp.com/telegraph.cachefly.net/' + res.data[0].src
+        url = 'https://i0.wp.com/missuo.ru' + res.data[0].src
       } else if (index == 3) {
         url = `https://jsdelivr.b-cdn.net/gh/${repo}@master/${pathname}/${uuid}${ext}`
       }
 
       return {
         URL: url,
-        BBCode: `<img src="${url}" alt="${file.name}" title="${file.name}" />`,
-        HTML: `[img]${url}[/img]`,
+        BBCode: `[img]${url}[/img]`,
+        HTML: `<img src="${url}" alt="${file.name}" title="${file.name}" />`,
         Markdown: `![${file.name}](${url})`,
         'Markdown with link': `[![${file.name}](${url})](${url})`
       }
     }
   } catch (error) {
     console.log(error)
-    return new Response(JSON.stringify(error), {
+    return new Response('服务器错误', {
       status: 500
     })
   }

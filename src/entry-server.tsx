@@ -11,11 +11,13 @@ export default createHandler(() => (
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <title>热烈的杯</title>
           <link rel="icon" href="/favicon.ico" />
-          <script src="https://file.uhsea.com/2402/c3c3b38d7e1cf4d521dde93af2396cf3AA.js"></script>
+          {/* <link rel="stylesheet" href="https://jsdelivr.b-cdn.net/npm/@pqina/pintura/pintura.css" /> */}
           {assets}
         </head>
         <body>
           <div id="app">{children}</div>
+          <script src="https://jsdelivr.b-cdn.net/gh/mydracula/image@master/20240205/93273d94959848b49de98f593169704e.js"></script>
+          {/* <script src="https://jsdelivr.b-cdn.net/npm/@pqina/pintura/pintura-umd.js"></script> */}
           {scripts}
         </body>
       </html>

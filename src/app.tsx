@@ -1,7 +1,11 @@
 // @ts-nocheck
 import { createSignal, createMemo, onMount } from 'solid-js';
 import { Select, Tabs } from "@kobalte/core";
+// import FilePondPluginImageEditor from '@pqina/filepond-plugin-image-editor';
+// import FilePondPluginFilePoster from 'filepond-plugin-file-poster';
 import "./app.css";
+// import 'filepond-plugin-file-poster/dist/filepond-plugin-file-poster.css';
+
 
 export default function App() {
   const option = ["TCL", "OSS", "Telegraph", "Github"]
@@ -22,7 +26,14 @@ export default function App() {
   }
 
   onMount(async () => {
+    // const { openDefaultEditor, createDefaultI'mageReader, createDefaultImageWriter, processImage, getEditorDefaults } = window.pintura
+    // window.FilePond.registerPlugin(
+    //   FilePondPluginImageEditor,
+    //   FilePondPluginFilePoster
+    // )
+
     const pond = window.FilePond.create();
+
     pond.setOptions({
       server: {
         process: (fieldName, file, metadata, load, error, progress, abort, transfer, options) => {
@@ -60,7 +71,49 @@ export default function App() {
       allowDrop: true,
       allowPaste: true,
       allowMultiple: true,
-      allowReorder: true
+      // allowReorder: true,
+      // allowImageEdit: false,
+      // filePosterMaxHeight: 46,
+      // allowProcess: true,
+      // imageEditor: {
+      //   createEditor: openDefaultEditor,
+      //   imageReader: [createDefaultImageReader],
+      //   imageWriter: [
+      //     createDefaultImageWriter,
+      //     () =>
+      //       createDefaultMediaWriter(
+      //         // Generic Media Writer options, passed to image and video writer
+      //         [
+      //           // For handling images
+      //           createDefaultImageWriter(),
+
+      //           // For handling videos
+      //           createDefaultVideoWriter({
+      //             // Video writer instructions here
+      //             // ...
+
+      //             // Encoder to use
+      //             encoder: createMediaStreamEncoder({
+      //               imageStateToCanvas,
+      //             }),
+      //           }),
+      //         ]
+      //       ),
+      //   ],
+
+      //   imageProcessor: processImage,
+      //   editorOptions: {
+      //     ...getEditorDefaults(),
+      //     // imageCropAspectRatio: null,
+      //   },
+
+      //   /* uncomment if you've used FilePond with version 6 of Pintura and are loading old file metadata
+      //   // map legacy data objects to new imageState objects
+      //   legacyDataToImageState: legacyDataToImageState,
+      //   */
+      // },
+
+      // stylePanelAspectRatio: 0.1
       // labelIdle: 'Drag & Drop your files or <span class="font-medium">Browse</span>',
       // stylePanelLayout: 'compact circle',
       // styleLoadIndicatorPosition: 'center bottom',
@@ -70,7 +123,6 @@ export default function App() {
       // styleButtonDisabled: 'opacity-50 pointer-events-none',
     })
     pond.on('processfile', (error, file) => {
-      console.log('File added', error, file, error === null);
       if (error === null) {
         const { serverId } = file
         const body = JSON.parse(serverId)
