@@ -26,7 +26,7 @@ export default function App() {
   }
 
   onMount(async () => {
-    // const { openDefaultEditor, createDefaultImageReader, createDefaultImageWriter, processImage, getEditorDefaults } = window.pintura
+    // const { openDefaultEditor, createDefaultI'mageReader, createDefaultImageWriter, processImage, getEditorDefaults } = window.pintura
     // window.FilePond.registerPlugin(
     //   FilePondPluginImageEditor,
     //   FilePondPluginFilePoster

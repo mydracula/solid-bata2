@@ -86,7 +86,7 @@ export async function POST (event: APIEvent) {
       } else if (index == 1) {
         url = res.data.data[0]['src']
       } else if (index == 2) {
-        url = 'https://i0.wp.com/telegraph.cachefly.net/' + res.data[0].src
+        url = 'https://i0.wp.com/missuo.ru' + res.data[0].src
       } else if (index == 3) {
         url = `https://jsdelivr.b-cdn.net/gh/${repo}@master/${pathname}/${uuid}${ext}`
       }
