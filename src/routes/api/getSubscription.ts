@@ -37,7 +37,6 @@ export async function GET (event: APIEvent) {
     return new Response(toBase64(result.join('\n')))
   } catch (error) {
     console.log(error, '么么么么')
-
     return new Response('服务端错误')
   }
 }
