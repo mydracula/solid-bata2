@@ -3,8 +3,17 @@
   padding: 0;
 }
 
+
+html,
+body,
+#app {
+  height: 100%;
+  min-height: 100%;
+}
+
 body {
   font-family: Gordita, Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+
 }
 
 ::-webkit-scrollbar {
