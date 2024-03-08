@@ -8,7 +8,7 @@ import "./app.css";
 
 
 export default function App() {
-  const option = ["TCL", "OSS", "Telegraph", "Github"]
+  const option = ["Telegraph", "Github"]
   const [value, setValue] = createSignal("Telegraph");
   const index = createMemo(() => option.findIndex((item) => item === value()));
   const [selectedTab, setSelectedTab] = createSignal("URL");
@@ -40,7 +40,7 @@ export default function App() {
           const formData = new FormData();
           formData.append(fieldName, file);
           formData.append('index', index());
-          if (index() == 3) {
+          if (index() == 1) {
             formData.append('repo', 'mydracula/image');
             formData.append('fileName', file.name);
           }

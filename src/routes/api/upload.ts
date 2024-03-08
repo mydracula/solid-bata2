@@ -4,8 +4,8 @@ import { APIEvent } from '@solidjs/start/server/types'
 import request from '@/request'
 
 const apis = [
-  'https://mall.tcl.com/rest/servicecenter/upload',
-  'https://f6v54.xs7ja.6176p.bptc.cn/api/h5UploadImage',
+  // 'https://mall.tcl.com/rest/servicecenter/upload',
+  // 'https://f6v54.xs7ja.6176p.bptc.cn/api/h5UploadImage',
   'https://telegra.ph/upload',
   'https://api.github.com/repos'
 ]
@@ -35,10 +35,10 @@ export async function POST (event: APIEvent) {
   const file = binary.get('file')
   const index = binary.get('index')
   const formData = new FormData()
-  if (index === '0' || index === '1' || index === '2') {
+  if (index === '0') {
     formData.append('file', file)
     formData.append('wechatapp_id', '441150')
-  } else if (index === '3') {
+  } else if (index === '1') {
     var repo = binary.get('repo')
     var fileName = binary.get('fileName')
     var pathname = new Date(Date.now() + 8 * 3600 * 1000)
@@ -55,7 +55,7 @@ export async function POST (event: APIEvent) {
 
   try {
     let res
-    if (index === '3') {
+    if (index === '1') {
       const buffer = await file.arrayBuffer()
       const content = await arrayBufferToBase64(buffer)
       res = await request({
@@ -77,18 +77,19 @@ export async function POST (event: APIEvent) {
       })
     }
 
-    const condition = index == 3 ? res.status == 201 : res.status == 200
+    const condition = index == 1 ? res.status == 201 : res.status == 200
 
     if (condition) {
       let url
+      // if (index == 0) {
+      //   url = res.data.data.filePath
+      // } else if (index == 1) {
+      //   url = res.data.data[0]['src']
+      // } else
       if (index == 0) {
-        url = res.data.data.filePath
+        url = 'https://rldmtest.pages.dev' + res.data[0].src
       } else if (index == 1) {
-        url = res.data.data[0]['src']
-      } else if (index == 2) {
-        url = 'https://i0.wp.com/missuo.ru' + res.data[0].src
-      } else if (index == 3) {
-        url = `https://jsdelivr.b-cdn.net/gh/${repo}@master/${pathname}/${uuid}${ext}`
+        url = `https://www.jsdelivr.ren/gh/${repo}@master/${pathname}/${uuid}${ext}`
       }
 
       return {
@@ -100,9 +101,10 @@ export async function POST (event: APIEvent) {
       }
     }
   } catch (error) {
-    console.log(error)
-    return new Response('服务器错误', {
-      status: 500
+    // console.log(error)
+    return new Response(JSON.stringify(error), {
+      status: 500,
+      'Content-Type': 'text/html; charset=utf-8'
     })
   }
 }

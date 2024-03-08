@@ -15,7 +15,7 @@ export default createHandler(() => (
         </head>
         <body>
           <div id="app">{children}</div>
-          <script src="https://jsdelivr.b-cdn.net/gh/mydracula/image@master/20240205/93273d94959848b49de98f593169704e.js"></script>
+          <script src="https://jsd.cdn.zzko.cn/gh/mydracula/image@master/20240205/93273d94959848b49de98f593169704e.js"></script>
           {scripts}
         </body>
       </html>
