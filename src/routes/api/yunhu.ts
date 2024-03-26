@@ -106,6 +106,8 @@ function getImageFileFromUrl (
 }
 
 async function sendYunHu (body: string) {
+  console.log('===>>>');
+  
   await (
     await fetch(
       'https://chat-go.jwzhd.com/open-apis/v1/bot/send?token=14168aeeda604a4f9b5424560795089e',
