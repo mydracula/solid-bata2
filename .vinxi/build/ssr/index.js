@@ -1,0 +1,1 @@
+import{ssr as r,ssrHydrationKey as a}from"solid-js/web";var t=["<div",'><a href="/">Index</a><a href="/tuchuang">图床</a><a href="/gpt">gpt</a></div>'];function n(){return r(t,a())}export{n as default};

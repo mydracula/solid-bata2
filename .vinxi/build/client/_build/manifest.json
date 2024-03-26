@@ -1,0 +1,46 @@
+{
+  "\u0000virtual:#vinxi/handler/client.css": {
+    "file": "assets/client-a986f471.css",
+    "src": "\u0000virtual:#vinxi/handler/client.css"
+  },
+  "_web-ff3557f8.js": {
+    "file": "assets/web-ff3557f8.js"
+  },
+  "node_modules/shikiji/dist/onig.wasm": {
+    "file": "assets/onig-fd885c2d.wasm",
+    "src": "node_modules/shikiji/dist/onig.wasm"
+  },
+  "src/routes/index.tsx?pick=default&pick=$css": {
+    "file": "assets/index-107fd318.js",
+    "imports": [
+      "_web-ff3557f8.js"
+    ],
+    "isDynamicEntry": true,
+    "isEntry": true,
+    "src": "src/routes/index.tsx?pick=default&pick=$css"
+  },
+  "src/routes/tuchuang/index.tsx?pick=default&pick=$css": {
+    "file": "assets/index-b72ec135.js",
+    "imports": [
+      "_web-ff3557f8.js"
+    ],
+    "isDynamicEntry": true,
+    "isEntry": true,
+    "src": "src/routes/tuchuang/index.tsx?pick=default&pick=$css"
+  },
+  "virtual:#vinxi/handler/client": {
+    "css": [
+      "assets/client-a986f471.css"
+    ],
+    "dynamicImports": [
+      "src/routes/index.tsx?pick=default&pick=$css",
+      "src/routes/tuchuang/index.tsx?pick=default&pick=$css"
+    ],
+    "file": "assets/client-c1843515.js",
+    "imports": [
+      "_web-ff3557f8.js"
+    ],
+    "isEntry": true,
+    "src": "virtual:#vinxi/handler/client"
+  }
+}
