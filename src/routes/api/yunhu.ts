@@ -11,7 +11,6 @@ export async function POST (event: APIEvent) {
   const recvId = chatType === 'group' ? chatId : senderId
   const recvType = chatType === 'group' ? chatType : 'user'
 
-
   if (eventType === 'message.receive.instruction') {
     const { commandId } = message
     if (commandId == 591) {
@@ -28,8 +27,8 @@ export async function POST (event: APIEvent) {
     }
     return
   }
-  console.log(message.content);
-  
+  console.log(message.content)
+
   if (message.contentType !== 'image') return
   const { imageUrl, imageName } = message.content
   getImageFileFromUrl(imageUrl, async function (imgFile: Blob) {
@@ -106,9 +105,8 @@ function getImageFileFromUrl (
 }
 
 async function sendYunHu (body: string) {
-  console.log('===>>>');
-  
-  await (
+  console.log(body, '===>>>')
+  const response = await (
     await fetch(
       'https://chat-go.jwzhd.com/open-apis/v1/bot/send?token=14168aeeda604a4f9b5424560795089e',
       {
@@ -117,4 +115,5 @@ async function sendYunHu (body: string) {
       }
     )
   ).json()
+  console.log(response)
 }
