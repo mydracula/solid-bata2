@@ -1,10 +1,9 @@
-import { APIEvent, readBody } from '@solidjs/start/server'
+import { APIEvent } from '@solidjs/start/server'
 
 export async function POST (event: APIEvent) {
-  const body = await readBody(event)
-  console.log(body)
-
+  const body = await event.request.json()
   const message = body.event.message
+  if (!message) return { code: 0 }
   const { chatId, chatType } = body.event.chat
   const { eventType } = body.header
   const { senderId } = body.event.sender
@@ -25,13 +24,14 @@ export async function POST (event: APIEvent) {
         })
       )
     }
-    return
+    return { code: 0 }
   }
-  console.log(message.content)
+  if (message.contentType !== 'image') return { code: 0 }
+  console.log(body)
 
-  if (message.contentType !== 'image') return
   const { imageUrl, imageName } = message.content
-  getImageFileFromUrl(imageUrl, async function (imgFile: Blob) {
+  getImageFileFromUrl(imageUrl, async function (imgFile) {
+    if (!imgFile) return
     const formData = new FormData()
     formData.append(
       'file',
@@ -89,15 +89,18 @@ export async function POST (event: APIEvent) {
       })
     )
   })
+
+  return { code: 0 }
 }
 
 function getImageFileFromUrl (
   imageUrl: string | URL | Request,
   callback: { (imgFile: any): Promise<void>; (arg0: Blob): void }
 ) {
-  fetch(imageUrl)
+  return fetch(imageUrl)
     .then(res => {
-      return res.blob()
+      if (res.status == 200) return res.blob()
+      return Promise.reject(false)
     })
     .then(blob => {
       callback(blob)
@@ -105,7 +108,6 @@ function getImageFileFromUrl (
 }
 
 async function sendYunHu (body: string) {
-  console.log(body, '===>>>')
   const response = await (
     await fetch(
       'https://chat-go.jwzhd.com/open-apis/v1/bot/send?token=14168aeeda604a4f9b5424560795089e',
@@ -115,5 +117,4 @@ async function sendYunHu (body: string) {
       }
     )
   ).json()
-  console.log(response)
 }

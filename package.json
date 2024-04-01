@@ -4,15 +4,15 @@
   "scripts": {
     "dev": "vinxi dev",
     "build": "vinxi build",
-    "start": "vinxi start"
+    "start": "vinxi start",
+    "preview": "wrangler pages dev ./dist"
   },
   "dependencies": {
     "@kobalte/core": "^0.12.1",
-    "@solidjs/start": "^0.4.10",
-    "axios": "^1.6.5",
-    "filepond": "^4.30.6",
-    "solid-js": "^1.8.12",
-    "vinxi": "0.1.6"
+    "@solidjs/start": "^1.0.0-rc.0",
+    "solid-js": "^1.8.16",
+    "vinxi": "^0.3.10",
+    "wrangler": "^3.41.0"
   },
   "engines": {
     "node": ">=18"
