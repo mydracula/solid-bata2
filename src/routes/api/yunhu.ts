@@ -44,6 +44,9 @@ export async function POST (event: APIEvent) {
         ? imageName.replace(/\.(tmp|webp)$/, '.png')
         : imageName
     )
+
+    console.log('开始请求');
+    
     const response = await (
       await fetch('https://yaohuo-peachStoat.web.val.run', {
         method: 'POST',
