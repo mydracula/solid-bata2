@@ -45,12 +45,26 @@ export async function POST (event: APIEvent) {
         : imageName
     )
 
-    console.log('开始请求');
-    
+    const timestamp = Date.now()
+    const locale = getSignature({
+      nonce: 'WCLtScJD',
+      timestamp
+    })
+    formData.append('timestamp', timestamp)
+    formData.append('nonce', 'WCLtScJD')
+    // const response = await (
+    //   await fetch('https://mall.tcl.com/rest/servicecenter/upload', {
+    //     method: 'POST',
+    //     body: formData
+    //   })
+    // ).json()
     const response = await (
-      await fetch('https://yaohuo-peachStoat.web.val.run', {
+      await fetch('https://api.weixinyanxuan.com/mall/api/img/upload', {
         method: 'POST',
-        body: formData
+        body: formData,
+        headers: {
+          'Accept-Locale': locale
+        }
       })
     ).json()
     console.log(response)
@@ -127,4 +141,21 @@ async function sendYunHu (body: string) {
       }
     )
   ).json()
+}
+
+function getSignature (e) {
+  var t = 'fuck-your-mother-three-thousand-times-apes-not-kill-apes'
+  var n = Object.keys(e)
+    .sort()
+    .map(function (key) {
+      if (typeof e[key] !== 'object' && e[key] !== null) {
+        return key + '=' + e[key]
+      }
+    })
+    .filter(function (str) {
+      return str
+    })
+  var n = n.join('&')
+  var i = CryptoJS.MD5(n + t).toString()
+  return i
 }
