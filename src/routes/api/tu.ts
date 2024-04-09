@@ -15,7 +15,6 @@ export async function POST (event: APIEvent) {
     timestamp
   })
 
-  console.log('开始请求')
 
   const response = await (
     await fetch('https://api.weixinyanxuan.com/mall/api/img/upload', {
