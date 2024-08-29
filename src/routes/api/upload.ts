@@ -19,7 +19,7 @@ export async function POST(event: APIEvent) {
         },
       });
     } else {
-      return new Response(JSON.stringify(response), {
+      return new Response(JSON.stringify(response) + JSON.stringify(body), {
         status: 500,
         headers: {
           'Content-Type': 'application/json',
@@ -27,7 +27,7 @@ export async function POST(event: APIEvent) {
       });
     }
   } catch (error) {
-    return new Response(JSON.stringify(error), {
+    return new Response(JSON.stringify(error) + '2', {
       status: 500,
       headers: {
         'Content-Type': 'application/json',

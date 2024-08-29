@@ -9,6 +9,6 @@ export default defineConfig({
         }
     },
     server: {
-        preset: 'netlify'
+        preset: 'netlify_edge'
     }
 });
