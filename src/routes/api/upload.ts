@@ -10,8 +10,6 @@ export async function POST(event: APIEvent) {
         'Cookie': ck,
       },
     });
-    console.log(response, 'response');
-
     const { data, status } = response;
     if (data?.image_url) {
       return new Response(JSON.stringify(data), {
@@ -21,7 +19,7 @@ export async function POST(event: APIEvent) {
         },
       });
     } else {
-      return new Response('Failed to upload image', {
+      return new Response(JSON.stringify(response), {
         status: 500,
         headers: {
           'Content-Type': 'application/json',
@@ -29,8 +27,7 @@ export async function POST(event: APIEvent) {
       });
     }
   } catch (error) {
-    console.log(error, 'response');
-    return new Response('Failed to upload image', {
+    return new Response(JSON.stringify(error), {
       status: 500,
       headers: {
         'Content-Type': 'application/json',
