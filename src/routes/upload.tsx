@@ -1,5 +1,5 @@
 
-import { createSignal, Show, mergeProps, createContext, createMemo, Index, createUniqueId } from 'solid-js';
+import { createSignal, Show, mergeProps, createMemo, Index, createUniqueId } from 'solid-js';
 import { produce, createStore } from "solid-js/store"
 import { useNavigate } from '@solidjs/router';
 import { normalizeProps, useMachine } from "@zag-js/solid"
@@ -55,7 +55,7 @@ export default function Upload() {
             formData.append('image', fileItem.file);
             formData.append('with_image_url', 'yes');
             formData.append('rkm', state?.rkm);
-            formData.append('ck', state?.cookie);
+            formData.append('ck', state?.ck);
             const cancelToken = axios.CancelToken.source();
             cancelTokenArray()[index] = cancelToken;
             setCancelTokenArray(cancelTokenArray())
@@ -151,7 +151,7 @@ export default function Upload() {
                     扫描文件
                 </button> */}
                 <button type="button" class="ml-2 py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 focus:outline-none focus:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-400 dark:bg-blue-800/30 dark:hover:bg-blue-800/20 dark:focus:bg-blue-800/20" onClick={() => api().openFilePicker()}>
-                扫描文件
+                    扫描文件
                 </button>
                 <button type="button" class="ml-2 py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-yellow-100 text-yellow-800 hover:bg-yellow-200 focus:outline-none focus:bg-yellow-200 disabled:opacity-50 disabled:pointer-events-none dark:text-yellow-500 dark:bg-yellow-800/30 dark:hover:bg-yellow-800/20 dark:focus:bg-yellow-800/20" onClick={openDrawer}>
                     控制台
@@ -418,23 +418,26 @@ function Dropdown(props: PlainObjectType) {
     const merged = mergeProps({ fileItem: {} }, props);
     const onSelect = (value: string, details: PlainObjectType) => {
         const { file, image_url } = details;
-        const enums: Record<string, string> = {
-            'URL': image_url,
-            'BBCode': `[img]${image_url}[/img]`,
-            'Markdown': `![${file.name}](${image_url})`,
+        if (image_url) {
+            const enums: Record<string, string> = {
+                'URL': image_url,
+                'BBCode': `[img]${image_url}[/img]`,
+                'Markdown': `![${file.name}](${image_url})`,
+            }
+            const copyInput = document.createElement("textarea");
+            copyInput.style.opacity = '0';
+            copyInput.style.position = "absolute";
+            copyInput.style.zIndex = "-999999";
+            copyInput.style.left = "-999999px";
+            copyInput.style.top = "-999999px";
+            copyInput.value = enums[value]
+            document.body.appendChild(copyInput);
+            copyInput.select();
+            document.execCommand("copy");
+            copyInput.remove();
+            toast.success("复制成功")
         }
-        const copyInput = document.createElement("textarea");
-        copyInput.style.opacity = '0';
-        copyInput.style.position = "absolute";
-        copyInput.style.zIndex = "-999999";
-        copyInput.style.left = "-999999px";
-        copyInput.style.top = "-999999px";
-        copyInput.value = enums[value]
-        document.body.appendChild(copyInput);
-        copyInput.select();
-        document.execCommand("copy");
-        copyInput.remove();
-        toast.success("复制成功")
+
     }
     return (
         <Menu.Root onSelect={({ value }) => onSelect(value, merged.fileItem)}>
