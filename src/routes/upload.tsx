@@ -36,7 +36,7 @@ export default function Upload() {
     }
     const onUpload = async () => {
         const state = JSON.parse(localStorage.getItem("solid-data-store")!)
-        if (!state?.cookie || !state?.rkm) {
+        if (!state?.ck || !state?.rkm) {
             navigate('/');
             toast.error('请配置相关参数.')
             return
