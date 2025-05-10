@@ -5,6 +5,10 @@ import Image from 'next/image';
 import { ArrowUpTrayIcon, ArrowPathIcon } from '@heroicons/react/24/outline';
 import { XCircleIcon } from '@heroicons/react/24/solid';
 
+const SUPPORTED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/bmp', 'image/svg+xml'];
+const MAX_FILE_SIZE_MB = 10;
+const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
+
 export default function HomePage() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isUploading, setIsUploading] = useState(false);
@@ -56,8 +60,27 @@ export default function HomePage() {
     fileInputRef.current?.click();
   };
 
-  const processFile = useCallback(async (file: File) => {
+  const processFile = useCallback(async (file: File | null) => {
     if (!file) return;
+
+    const handleUploadError = (message: string) => {
+      setUploadMessage(message);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+      setPreviewUrl(null);
+      setIsUploading(false);
+    };
+
+    if (file.size > MAX_FILE_SIZE_BYTES) {
+      handleUploadError(`上传失败：文件大小不能超过 ${MAX_FILE_SIZE_MB}MB。`);
+      return;
+    }
+
+    if (!SUPPORTED_IMAGE_TYPES.includes(file.type)) {
+      handleUploadError(`不支持的文件格式 (${file.type || '未知类型'})。请选择 JPG, PNG, GIF, WebP 等常用图片格式。`);
+      return;
+    }
 
     const reader = new FileReader();
     reader.onloadend = () => {
@@ -108,8 +131,9 @@ export default function HomePage() {
   }, [fileInputRef]);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files[0]) {
-      processFile(event.target.files[0]);
+    const file = event.target.files?.[0];
+    if (file) {
+      processFile(file);
     }
   };
 
@@ -118,8 +142,9 @@ export default function HomePage() {
     event.stopPropagation();
     setIsDraggingOver(false);
     if (isUploading) return;
-    if (event.dataTransfer.files && event.dataTransfer.files[0]) {
-      processFile(event.dataTransfer.files[0]);
+    const file = event.dataTransfer.files?.[0];
+    if (file) {
+      processFile(file);
     }
   };
 
@@ -171,13 +196,14 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-sky-100 via-slate-50 to-white flex flex-col items-center justify-center p-4 sm:p-6 md:p-8 selection:bg-sky-200 selection:text-sky-900">
       <header className="w-full max-w-2xl flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-4 sm:gap-6 mb-8 md:mb-12 px-6 sm:px-8 md:px-10 pl-0!">
-        <div className="flex-shrink-0">
+        <div className="relative w-16 h-16 flex-shrink-0">
           <Image
             src="/logo.png"
             alt="jp_tu"
-            width={64}
-            height={64}
+            fill
             priority
+            sizes="64px"
+            className="object-contain"
           />
         </div>
         <div className="text-center sm:text-left">
@@ -279,3 +305,4 @@ export default function HomePage() {
     </div>
   );
 }
+

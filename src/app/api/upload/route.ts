@@ -1,5 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+
+interface HatenaResponse {
+  height: number;
+  hatena_syntax: string;
+  width: number;
+  image_url: string;
+}
+
+
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();
@@ -9,7 +18,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'No file provided.' }, { status: 400 });
     }
 
-    const rkm = process.env.RKM;
+
+    const rkm = process.env.RKM ;
     const ck = process.env.CK;
 
     if (!rkm || !ck) {
@@ -34,22 +44,15 @@ export async function POST(request: NextRequest) {
       const errorText = await response.text();
       return NextResponse.json({ error: `Failed to upload image: ${response.statusText} - ${errorText}` }, { status: response.status });
     }
-    interface HatenaResponse {
-      height: number;
-      hatena_syntax: string;
-      width: number;
-      image_url: string;
-    }
 
-    const hatenaApiResponse = await response.json() as HatenaResponse;
-    console.log("Hatena API JSON response:", hatenaApiResponse);
-
-    if (!hatenaApiResponse || typeof hatenaApiResponse.image_url !== 'string' || !hatenaApiResponse.image_url.startsWith('http')) {
+    const hatenaApiResponse = await response.text();
+    if (!hatenaApiResponse?.trim()) return NextResponse.json({ error: 'Failed to get Hatena API response.' }, { status: 500 });
+    const hatenaResponse: HatenaResponse = JSON.parse(hatenaApiResponse);
+    if (!hatenaApiResponse || typeof hatenaResponse.image_url !== 'string' || !hatenaResponse.image_url.startsWith('http')) {
       return NextResponse.json({ error: 'Failed to extract a valid image URL from Hatena API response.' }, { status: 500 });
     }
-
-    const imageUrl = hatenaApiResponse.image_url;
-    return NextResponse.json({ imageUrl: imageUrl });
+    const imageUrl = hatenaResponse.image_url;
+    return NextResponse.json({ imageUrl });
   } catch (error) {
     if (error instanceof Error) {
       return NextResponse.json({ error: `Internal server error: ${error.message}` }, { status: 500 });
