@@ -2,9 +2,9 @@ name: Docker Image CI for GHCR
 
 on:
   push:
-    branches: [ "master" ] # 触发分支为 master
+    branches: [ "docker" ] # 触发分支为 master
   pull_request:
-    branches: [ "master" ] # 可选：在 PR 到 master 分支时也构建
+    branches: [ "docker" ] # 可选：在 PR 到 master 分支时也构建
 
 jobs:
   build_and_push_to_ghcr:
