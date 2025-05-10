@@ -90,9 +90,13 @@ export default function HomePage() {
 
       setUploadedImageUrl(result.imageUrl);
       setUploadMessage(null);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Upload error:', error);
-      setUploadMessage(`上传出错：${error.message || '未知错误'}`);
+      if (error instanceof Error) {
+        setUploadMessage(`上传出错：${error.message}`);
+      } else {
+        setUploadMessage(`上传出错：未知错误`);
+      }
       setUploadedImageUrl(null);
       setPreviewUrl(null);
     } finally {
@@ -208,8 +212,8 @@ export default function HomePage() {
             disabled={isUploading}
           />
           {previewUrl && !uploadedImageUrl && (
-            <div className="mb-4 h-48 flex items-center justify-center">
-              <img src={previewUrl} alt="图片预览" className="max-h-full max-w-full object-contain rounded-md shadow-lg max-h-40" />
+            <div className="mb-4 h-48 flex items-center justify-center relative">
+              {previewUrl && <Image src={previewUrl} alt="图片预览" fill style={{ objectFit: 'contain' }} className="rounded-md shadow-lg" />}
             </div>
           )}
           {!previewUrl && (
