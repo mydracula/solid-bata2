@@ -1,0 +1,12 @@
+Dockerfile
+.dockerignore
+node_modules
+npm-debug.log
+README.md
+.next
+.git
+.gitignore
+# Add any other files or directories that should not be included in the Docker image
+# For example, local environment files if not handled by multi-stage builds:
+# .env*.local
+memory-bank/
