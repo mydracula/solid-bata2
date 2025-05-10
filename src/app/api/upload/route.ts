@@ -9,8 +9,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'No file provided.' }, { status: 400 });
     }
 
-    const rkm = process.env.RKM || 'ugpMnZPLjfBB78ecxtINsw';
-    const ck = process.env.CK || 'rk=2254808a05e53aa1303768cb275c8d61a7c1b7f8;';
+    const rkm = process.env.RKM;
+    const ck = process.env.CK;
 
     if (!rkm || !ck) {
       console.error('RKM or CK environment variables are not set. These must be provided via server-side environment variables.');

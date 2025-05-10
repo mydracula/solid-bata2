@@ -3,7 +3,7 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import { ArrowUpTrayIcon, ArrowPathIcon } from '@heroicons/react/24/outline';
-import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/24/solid';
+import { XCircleIcon } from '@heroicons/react/24/solid';
 
 export default function HomePage() {
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -11,7 +11,7 @@ export default function HomePage() {
   const [uploadMessage, setUploadMessage] = useState<string | null>(null);
   const [currentDisplayMessage, setCurrentDisplayMessage] = useState<string | null>(null);
   const [showNotification, setShowNotification] = useState(false);
-  
+
   const [uploadedImageUrl, setUploadedImageUrl] = useState<string | null>(null);
   const [displaySuccessUrl, setDisplaySuccessUrl] = useState<string | null>(null);
   const [showSuccessNotification, setShowSuccessNotification] = useState(false);
@@ -190,8 +190,8 @@ export default function HomePage() {
         <div
           className={`rounded-lg p-8 sm:p-12 text-center transition-all duration-300 ease-in-out group
             ${isUploading ? 'cursor-not-allowed bg-slate-100 border-slate-400 border-2 border-dashed'
-                          : isDraggingOver ? 'bg-sky-100 border-sky-500 border-2 border-solid ring-2 ring-sky-500 ring-offset-2'
-                                           : 'cursor-pointer hover:border-sky-500 hover:border-solid hover:bg-sky-100 border-sky-500 border-2 border-dashed'
+              : isDraggingOver ? 'bg-sky-100 border-sky-500 border-2 border-solid ring-2 ring-sky-500 ring-offset-2'
+                : 'cursor-pointer hover:border-sky-500 hover:border-solid hover:bg-sky-100 border-sky-500 border-2 border-dashed'
             }`}
           onClick={handleUploadAreaClick}
           onDrop={handleDrop}
@@ -234,37 +234,36 @@ export default function HomePage() {
             </p>
           )}
         </div>
-        
+
         {(currentDisplayMessage || displaySuccessUrl) && (
           <div className="mt-6 min-h-12">
             {currentDisplayMessage && (
               <div className={`p-4 rounded-lg text-sm flex items-start space-x-3
-              transition-opacity duration-300 ease-in-out ${showNotification ? 'opacity-100' : 'opacity-0'} ${
-              isUploading
-                ? 'bg-sky-50 border border-sky-200 text-sky-700'
-                : 'bg-red-50 border border-red-200 text-red-700'
-            }`}>
-              {isUploading ? (
-                <ArrowPathIcon className="h-5 w-5 text-sky-500 animate-spin flex-shrink-0" aria-hidden="true" />
-              ) : (
-                <XCircleIcon className="h-5 w-5 text-red-500 flex-shrink-0" aria-hidden="true" />
-              )}
-              <div className="flex-1">
-                <p className="whitespace-pre-wrap break-all">{currentDisplayMessage}</p>
+              transition-opacity duration-300 ease-in-out ${showNotification ? 'opacity-100' : 'opacity-0'} ${isUploading
+                  ? 'bg-sky-50 border border-sky-200 text-sky-700'
+                  : 'bg-red-50 border border-red-200 text-red-700'
+                }`}>
+                {isUploading ? (
+                  <ArrowPathIcon className="h-5 w-5 text-sky-500 animate-spin flex-shrink-0" aria-hidden="true" />
+                ) : (
+                  <XCircleIcon className="h-5 w-5 text-red-500 flex-shrink-0" aria-hidden="true" />
+                )}
+                <div className="flex-1">
+                  <p className="whitespace-pre-wrap break-all">{currentDisplayMessage}</p>
+                </div>
               </div>
-            </div>
             )}
 
             {displaySuccessUrl && !currentDisplayMessage && (
-               <div className={`py-0 rounded-lg border border-transparent transition-opacity duration-300 ease-in-out ${showSuccessNotification ? 'opacity-100' : 'opacity-0'}`}>
+              <div className={`py-0 rounded-lg border border-transparent transition-opacity duration-300 ease-in-out ${showSuccessNotification ? 'opacity-100' : 'opacity-0'}`}>
                 <input
                   type="text"
-                readOnly
-                value={displaySuccessUrl}
-                className="w-full p-3 border border-slate-300 rounded-lg bg-slate-50 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 selection:bg-sky-200 text-slate-700"
-                onFocus={(e) => e.target.select()}
-              />
-            </div>
+                  readOnly
+                  value={displaySuccessUrl}
+                  className="w-full p-3 border border-slate-300 rounded-lg bg-slate-50 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 selection:bg-sky-200 text-slate-700"
+                  onFocus={(e) => e.target.select()}
+                />
+              </div>
             )}
           </div>
         )}
